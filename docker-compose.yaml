@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   python-app:
-    image:python-app:latest
+    image: python-app:latest
     ports:
       - "8000:8000"
     restart: unless-stopped
