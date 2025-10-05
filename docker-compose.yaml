@@ -5,6 +5,6 @@ services:
     image: rahul0738/python-app:latest
     container_name: my-python-container
     ports:
-      - "8000:8000"
+      - "8000:5000"
     restart: unless-stopped
 
