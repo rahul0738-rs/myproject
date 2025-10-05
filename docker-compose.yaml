@@ -3,6 +3,7 @@ version: '3.3'
 services:
   python-app:
     image: rahul0738/python-app:latest
+    container_name: my-python-container
     ports:
       - "8000:8000"
     restart: unless-stopped
