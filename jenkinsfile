@@ -1,0 +1,33 @@
+pipeline{
+    agent any
+    stages{
+        stage('code'){
+            steps{
+                git url:'https://github.com/rahul0738-rs/myproject.git',branch:'main'
+            }
+        }
+        stage('Build'){
+            steps{
+                sh 'docker build -t myapp-image .'
+            }
+        }
+        stage('push'){
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub',
+                    usernameVariable: 'DOCKERHUB_USER',
+                    passwordVariable: 'DOCKERHUB_PASS'
+                )]) {
+                    sh 'echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USER" --password-stdin'
+                    sh 'docker tag myapp-image rahul0738/python-app:latest'
+                    sh 'docker push rahul0738/python-app:latest'
+                }
+            }
+        }
+        stage('deploy'){
+           steps{
+                sh "docker-compose down && docker-compose up -d"
+            }
+        }
+    }
+}
